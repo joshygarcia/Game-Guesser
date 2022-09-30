@@ -1,0 +1,19 @@
+{
+  "name": "guess-the-game",
+  "version": "1.0.0",
+  "description": "A game in which the player has to guess the name of the videogame from its the cover art",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshyGarcia/guess-the-game.git"
+  },
+  "author": "Joshy Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoshyGarcia/guess-the-game/issues"
+  },
+  "homepage": "https://github.com/JoshyGarcia/guess-the-game#readme"
+}
