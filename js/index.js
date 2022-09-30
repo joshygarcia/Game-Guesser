@@ -2,7 +2,7 @@
 const options = {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer g74lo321qgjm43qxal6e6dh2m00egq',
+      'Authorization': 'Bearer 7p4zwti6xino46dpqbdcp8dahxsj63',
       'Client-ID': 'xa1693c4tecsc6kp8m5hh5yemzube8',
       'Content-Type': 'application/json'
     },
@@ -19,8 +19,9 @@ const fetchGame = async () => {
 
 const getGame = async () => {
   const result = await fetchGame()
-  // document.getElementById('game-name').innerText = `${result[0].name}`
-  document.getElementById('game-cover').innerHTML = `<img src="https://images.igdb.com/igdb/image/upload/t_cover_big/${result[0].cover.image_id}.jpg">`
+  const gameId = Math.floor(Math.random() * 500)
+  document.getElementById('game-name').innerText = `${result[gameId].name}`
+  document.getElementById('game-cover').innerHTML = `<img src="https://images.igdb.com/igdb/image/upload/t_cover_big/${result[gameId].cover.image_id}.jpg">`
   console.log(result)
 }
 
