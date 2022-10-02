@@ -17,7 +17,7 @@ const options = {
       'Client-ID': 'xa1693c4tecsc6kp8m5hh5yemzube8',
       'Content-Type': 'application/json'
     },
-    body: 'fields name,cover.image_id,url,similar_games.name; where total_rating_count > 100; limit 500;'
+    body: 'fields name,cover.image_id,url,similar_games.name,screenshots.image_id; where total_rating_count > 100; limit 500;'
 }
   
 const fetchGame = async () => {
@@ -29,33 +29,46 @@ const fetchGame = async () => {
 
 const getGame = async () => {
   const result = await fetchGame()
-  const gameId = Math.floor(Math.random() * 500)
+  const gameId = Math.floor(Math.random() * result.length)
 
-  const gameOptions = await getGameOptions(result[gameId].name, result[gameId].similar_games)
-  const gameOptionsHtml = await getGameOptionsHtml(gameOptions)
+  const gameOptionsHtml = getGameOptionsHtml(result[gameId].name, result[gameId].similar_games)
+
+  const gameImagesHtml = getGameImagesHtml(result[gameId].screenshots)
  
   document.getElementById('game-name').innerText = `${result[gameId].name}`
-  document.getElementById('game-cover').innerHTML = `<img src="https://images.igdb.com/igdb/image/upload/t_cover_big/${result[gameId].cover.image_id}.jpg">`
+  document.getElementById('game-images-container').innerHTML = gameImagesHtml
   document.getElementById('game-options').innerHTML = gameOptionsHtml
 }
 
-const getGameOptions = async (name, similar_games) => {
+const getGameOptionsHtml = (name, similar_games) => {
+  let optionsHtml = ''
   let result = []
   result.push(name)
   for (let i = 0; i <= 2; i++) {
-    result.push(similar_games[Math.floor(Math.random() * similar_games.length)].name)
+    let randomIndex = Math.floor(Math.random() * similar_games.length)
+    result.push(similar_games[randomIndex].name)
+    similar_games.splice(randomIndex, 1)
   }
-  shuffleArray(result)
-  return result
-}
-
-const getGameOptionsHtml = (gameOptionsArr) => {
-  let optionsHtml = ''
-  // console.log(gameOptionsArr)
-  for(game of gameOptionsArr) {
+  shuffleArray(result)  
+  for(game of result) {
     optionsHtml += `<p class="game-option">${game}</p>`
   }
   return optionsHtml
+}
+
+const getGameImagesHtml = (screenshotsArr) => {
+  let result = []
+  let imagesHtml = ''
+  for (let i = 0; i <= 3; i++) {
+    let randomIndex = Math.floor(Math.random() * screenshotsArr.length)
+    result.push(screenshotsArr[randomIndex].image_id)
+    screenshotsArr.splice(randomIndex, 1)
+  }
+  for(image of result) {
+    imagesHtml += `<img src="https://images.igdb.com/igdb/image/upload/t_720p/${image}.jpg" class="game-img">`
+  }
+  console.log(result)
+  return imagesHtml
 }
 
 function shuffleArray(array) {
