@@ -1,13 +1,23 @@
+const getApiKey =  async () => {
+  const response = await fetch('https://id.twitch.tv/oauth2/token?client_id=xa1693c4tecsc6kp8m5hh5yemzube8&client_secret=zilm2kgj0lrbdrye67s74033j175qt&grant_type=client_credentials', {method: 'POST'})
+  const data = await response.json()
+
+  apikey = data.access_token
+  localStorage.setItem('apikey', apikey)
+  console.log(apikey)
+  return data.access_token
+}
+
+getApiKey()
 
 const options = {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer 7p4zwti6xino46dpqbdcp8dahxsj63',
+      'Authorization': `Bearer ${localStorage.getItem('apikey')}`,
       'Client-ID': 'xa1693c4tecsc6kp8m5hh5yemzube8',
       'Content-Type': 'application/json'
     },
     body: 'fields name,cover.image_id,url,similar_games.name; where total_rating_count > 100; limit 500;'
-    
 }
   
 const fetchGame = async () => {
@@ -32,18 +42,16 @@ const getGame = async () => {
 const getGameOptions = async (name, similar_games) => {
   let result = []
   result.push(name)
-  console.log(similar_games)
   for (let i = 0; i <= 2; i++) {
     result.push(similar_games[Math.floor(Math.random() * similar_games.length)].name)
   }
   shuffleArray(result)
-  console.log(result)
   return result
 }
 
 const getGameOptionsHtml = (gameOptionsArr) => {
   let optionsHtml = ''
-  console.log(gameOptionsArr)
+  // console.log(gameOptionsArr)
   for(game of gameOptionsArr) {
     optionsHtml += `<p class="game-option">${game}</p>`
   }
@@ -53,7 +61,6 @@ const getGameOptionsHtml = (gameOptionsArr) => {
 function shuffleArray(array) {
   let currentIndex = array.length
   let randomIndex
-  console.log(currentIndex)
 
   while (currentIndex != 0) {
 
