@@ -1,10 +1,49 @@
+const sliderImagesEl = document.getElementById('slider-images')
+const gameOptionsEl = document.getElementById('game-options-container')
+
+const nextBtn = document.querySelector(".next-btn");
+const prevBtn = document.querySelector(".prev-btn");
+let slides = ''
+let numberOfSlides =''
+
+let slideNumber = 0;
+
+nextBtn.addEventListener("click", () => {
+
+  slides.forEach((slide) => {
+    slide.classList.remove("active");
+  });
+  
+  slideNumber++;
+
+  if(slideNumber > (slides.length - 1)){ 
+  slideNumber = 0;
+  }
+  slides[slideNumber].classList.add("active")
+});
+
+prevBtn.addEventListener("click", () => {
+
+  slides.forEach((slide) => {
+    slide.classList.remove("active");
+  });
+  
+  slideNumber--;
+
+  if(slideNumber < 0){ 
+  slideNumber = slides.length -1;
+  }
+  slides[slideNumber].classList.add("active")
+});
+
+let gameName = ''
+
 const getApiKey =  async () => {
   const response = await fetch('https://id.twitch.tv/oauth2/token?client_id=xa1693c4tecsc6kp8m5hh5yemzube8&client_secret=zilm2kgj0lrbdrye67s74033j175qt&grant_type=client_credentials', {method: 'POST'})
   const data = await response.json()
 
   apikey = data.access_token
   localStorage.setItem('apikey', apikey)
-  console.log(apikey)
   return data.access_token
 }
 
@@ -32,12 +71,26 @@ const getGame = async () => {
   const gameId = Math.floor(Math.random() * result.length)
 
   const gameOptionsHtml = getGameOptionsHtml(result[gameId].name, result[gameId].similar_games)
-
   const gameImagesHtml = getGameImagesHtml(result[gameId].screenshots)
  
-  document.getElementById('game-name').innerText = `${result[gameId].name}`
-  document.getElementById('game-images-container').innerHTML = gameImagesHtml
-  document.getElementById('game-options').innerHTML = gameOptionsHtml
+  gameName = `${result[gameId].name}`
+  sliderImagesEl.innerHTML = gameImagesHtml
+  gameOptionsEl.innerHTML = gameOptionsHtml
+
+  slides = document.querySelectorAll(".slide");
+  slides[0].classList.add('active')
+
+  gameOptionsEl.addEventListener('click', e => {
+    if(e.target.innerText == gameName) {
+      e.target.classList.add('correct')
+      console.log('Correct')
+      setTimeout(getGame, 2000)
+    }
+    else {
+      e.target.classList.add('incorrect')
+      console.log('Incorrect')
+    }
+  })
 }
 
 const getGameOptionsHtml = (name, similar_games) => {
@@ -51,7 +104,7 @@ const getGameOptionsHtml = (name, similar_games) => {
   }
   shuffleArray(result)  
   for(game of result) {
-    optionsHtml += `<p class="game-option">${game}</p>`
+    optionsHtml += `<button class="game-option" id="game">${game}</button>`
   }
   return optionsHtml
 }
@@ -65,9 +118,10 @@ const getGameImagesHtml = (screenshotsArr) => {
     screenshotsArr.splice(randomIndex, 1)
   }
   for(image of result) {
-    imagesHtml += `<img src="https://images.igdb.com/igdb/image/upload/t_720p/${image}.jpg" class="game-img">`
+    imagesHtml += `<div class="slide">
+                      <img src="https://images.igdb.com/igdb/image/upload/t_720p/${image}.jpg" class="game-img">
+                  </div>`
   }
-  console.log(result)
   return imagesHtml
 }
 
