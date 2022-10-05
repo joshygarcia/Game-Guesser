@@ -1,5 +1,7 @@
 const sliderImagesEl = document.getElementById('slider-images')
-const gameOptionsEl = document.getElementById('game-options-container')
+const gameOptionsContainer = document.getElementById('game-options-container')
+let gameOptionsEl = []
+let gamesArray = []
 
 const nextBtn = document.querySelector(".next-btn");
 const prevBtn = document.querySelector(".prev-btn");
@@ -66,31 +68,44 @@ const fetchGame = async () => {
   return data
 }
 
-const getGame = async () => {
+const startGame = async () => {
   const result = await fetchGame()
-  const gameId = Math.floor(Math.random() * result.length)
+  gamesArray = await result
 
-  const gameOptionsHtml = getGameOptionsHtml(result[gameId].name, result[gameId].similar_games)
-  const gameImagesHtml = getGameImagesHtml(result[gameId].screenshots)
- 
-  gameName = `${result[gameId].name}`
+  renderGame()  
+}
+
+const renderGame = () => {
+  const gameId = Math.floor(Math.random() * gamesArray.length)
+
+  const gameOptionsHtml = getGameOptionsHtml(gamesArray[gameId].name, gamesArray[gameId].similar_games)
+  const gameImagesHtml = getGameImagesHtml(gamesArray[gameId].screenshots)
+
+  gameName = `${gamesArray[gameId].name}`
   sliderImagesEl.innerHTML = gameImagesHtml
-  gameOptionsEl.innerHTML = gameOptionsHtml
+  gameOptionsContainer.innerHTML = gameOptionsHtml
 
   slides = document.querySelectorAll(".slide");
   slides[0].classList.add('active')
 
-  gameOptionsEl.addEventListener('click', e => {
-    if(e.target.innerText == gameName) {
-      e.target.classList.add('correct')
-      console.log('Correct')
-      setTimeout(getGame, 2000)
-    }
-    else {
-      e.target.classList.add('incorrect')
-      console.log('Incorrect')
-    }
-  })
+  gameOptionsEl = document.querySelectorAll('.game-option')
+  
+  for(option of gameOptionsEl){
+    option.addEventListener('click', e => {
+      e.stopPropagation()
+      if(e.target.innerText == gameName) {
+        e.target.classList.add('correct')
+        console.log('Correct')
+        setTimeout(renderGame,1500)
+      }
+      else {
+        e.target.classList.add('incorrect')
+        console.log('Incorrect')
+      }
+    })
+  }
+
+  gamesArray.splice(gameId, 1)
 }
 
 const getGameOptionsHtml = (name, similar_games) => {
@@ -142,4 +157,4 @@ function shuffleArray(array) {
   return array;
 }
 
-getGame()
+startGame()
