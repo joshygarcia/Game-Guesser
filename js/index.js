@@ -1,44 +1,17 @@
-const sliderImagesEl = document.getElementById('slider-images')
-const gameOptionsContainer = document.getElementById('game-options-container')
+let nextBtn = ''
+let prevBtn = ''
+let sliderImagesEl = ''
+let gameOptionsContainer = ''
+const startBtn = document.getElementById('start-btn')
+const mainContainer = document.getElementById('main-container')
+
 let gameOptionsEl = []
 let gamesArray = []
+let gameName = ''
 
-const nextBtn = document.querySelector(".next-btn");
-const prevBtn = document.querySelector(".prev-btn");
 let slides = ''
 let numberOfSlides =''
-
-let slideNumber = 0;
-
-nextBtn.addEventListener("click", () => {
-
-  slides.forEach((slide) => {
-    slide.classList.remove("active");
-  });
-  
-  slideNumber++;
-
-  if(slideNumber > (slides.length - 1)){ 
-  slideNumber = 0;
-  }
-  slides[slideNumber].classList.add("active")
-});
-
-prevBtn.addEventListener("click", () => {
-
-  slides.forEach((slide) => {
-    slide.classList.remove("active");
-  });
-  
-  slideNumber--;
-
-  if(slideNumber < 0){ 
-  slideNumber = slides.length -1;
-  }
-  slides[slideNumber].classList.add("active")
-});
-
-let gameName = ''
+let slideNumber = 0
 
 const getApiKey =  async () => {
   const response = await fetch('https://id.twitch.tv/oauth2/token?client_id=xa1693c4tecsc6kp8m5hh5yemzube8&client_secret=zilm2kgj0lrbdrye67s74033j175qt&grant_type=client_credentials', {method: 'POST'})
@@ -48,8 +21,6 @@ const getApiKey =  async () => {
   localStorage.setItem('apikey', apikey)
   return data.access_token
 }
-
-getApiKey()
 
 const options = {
     method: 'POST',
@@ -69,10 +40,30 @@ const fetchGame = async () => {
 }
 
 const startGame = async () => {
+
+
+  mainContainer.innerHTML = `
+    <div id="game-images-slider">
+      <div id="slider-images"></div>
+      <div id="image-nav">
+          <i class="fa-solid fa-arrow-left prev-btn"></i>
+          <i class="fa-solid fa-arrow-right next-btn"></i>
+      </div>
+    </div>
+    <div id="game-options-container"></div>
+      `
+
+  sliderImagesEl = document.getElementById('slider-images')
+  gameOptionsContainer = document.getElementById('game-options-container')
+
+  prevBtn = document.querySelector(".prev-btn")
+  nextBtn = document.querySelector(".next-btn")
+
   const result = await fetchGame()
   gamesArray = await result
 
-  renderGame()  
+  renderGame()
+  createSlider()
 }
 
 const renderGame = () => {
@@ -106,6 +97,36 @@ const renderGame = () => {
   }
 
   gamesArray.splice(gameId, 1)
+}
+
+const createSlider = () =>{
+  
+  nextBtn.addEventListener("click", () => {
+    slides.forEach((slide) => {
+      slide.classList.remove("active")
+    });
+    
+    slideNumber++
+
+    if(slideNumber > (slides.length - 1)){ 
+    slideNumber = 0
+    }
+    slides[slideNumber].classList.add("active")
+  });
+
+  prevBtn.addEventListener("click", () => {
+
+    slides.forEach((slide) => {
+      slide.classList.remove("active")
+    });
+    
+    slideNumber--
+
+    if(slideNumber < 0){ 
+    slideNumber = slides.length -1
+    }
+    slides[slideNumber].classList.add("active")
+  })
 }
 
 const getGameOptionsHtml = (name, similar_games) => {
@@ -157,4 +178,8 @@ function shuffleArray(array) {
   return array;
 }
 
-startGame()
+startBtn.addEventListener('click', () =>{
+  startGame()
+})
+
+getApiKey()

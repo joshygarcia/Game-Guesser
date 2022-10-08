@@ -12,7 +12,7 @@ body {
     align-items: center;
 }
 
-#game-container {
+#main-container {
     width: 90%;
     height: 90%;
     display: flex;
@@ -21,6 +21,17 @@ body {
     justify-content: center;
     align-items: center;
     ;
+}
+
+#start-btn {
+    padding: 1.5rem;
+    font-size: 2rem;
+    letter-spacing: .1em;
+    font-weight: bolder;
+    border: none;
+    border-radius: 25px;
+    background: royalblue;
+    color: white;
 }
 
 #game-images-slider {
