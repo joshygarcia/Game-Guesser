@@ -8,8 +8,27 @@
     </head>
     <body>
         <section id="main-container">
-            <button id="start-btn">Start Game</button>
+            <div class="popup" id="popup">
+                <div class="popup-header">
+                    <div class="popup-title">How To Play</div>
+                    <button class="popup-close-btn">&times;</button>
+                </div>
+                <div class="popup-body">
+                    <p>In the game, you will be shown four pictures of different video games. You must select the correct name of the game from the four options given.</p> 
+                    <p>If you choose the wrong game, you will lose a life. You have three lives in total, If you lose all three lives, the game is over</p>
+                    <p>There are 10 rounds in total</p>
+                    <p>The object of the game is to correctly identify as many games as possible and get the highest score possible.</p>
+                </div>
+            </div>
+            <div id="overlay"></div>
+            
+            <div class="start-menu">
+                <img class="logo" src="GameGuesserLogo.png" alt="">
+                <button class="how-to-play popup-open-btn">How To Play</button>
+                <button id="start-btn">Start Game</button>
+            </div>
         </section>
+        <footer>Designed and Built by Joshy Garcia</footer>
         <script src="/js/index.js"></script>
     </body>
 </html>

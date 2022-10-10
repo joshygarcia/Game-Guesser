@@ -8,36 +8,144 @@ body {
     height: 100vh;
     display: flex;
     background: #000116;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    flex-direction: column;
 }
 
 #main-container {
     width: 90%;
-    height: 90%;
+    height: 80%;
     display: flex;
     gap: 1em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    ;
+}
+
+.popup {
+    color: rgba(255, 255, 255, 0.744);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    background: #000116;
+    border:rgb(49, 219, 216) 2px solid;
+    border-radius: 25px;
+    width: 70%;
+    max-width: 400px;
+    z-index: 10;
+}
+
+.popup.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-header {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    padding: 1em;
+    align-items: center;
+}
+
+.popup-title {
+    color: rgb(49, 219, 216);
+    font-size: 1.5rem;
+    font-weight: bolder;
+    align-self: center;
+    grid-column-start: 2;
+    text-align: center;
+}
+
+.popup-body {
+    font-size: 1.3rem;
+    padding: 1em;
+    text-align: center;
+    line-height: 1.3em;
+}
+
+.popup-body p {
+    margin-bottom: 1em;
+}
+
+.popup-close-btn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: none;
+    color: rgb(49, 219, 216);
+    font-size: 2rem;
+    justify-self: end;
+    font-weight: bolder;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(65, 65, 65, 0.5);
+    pointer-events: none;
+    transition: 200ms ease-in-out;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.start-menu {
+    width: 90%;
+    height: 60%;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    max-width: 250px;
+}
+
+.logo-in-game {
+    max-width: 120px;
+    margin-bottom: .5em;
+}
+
+.how-to-play {
+    font-size: 2rem;
+    color: rgb(49, 219, 216);
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+footer {
+    justify-self: end;
+    color: #373737;
 }
 
 #start-btn {
-    padding: 1.5rem;
-    font-size: 2rem;
+    padding: 1em;
+    font-size: 1rem;
     letter-spacing: .1em;
     font-weight: bolder;
     border: none;
     border-radius: 25px;
     background: royalblue;
     color: white;
+    cursor: pointer;
 }
 
 #game-images-slider {
     position: relative; 
     background: #000116;
     width: 100%;
+    max-width: 1180px;
     height: 57vw;
     overflow: hidden;
 }
@@ -99,7 +207,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    opacity: .1;
+    opacity: .3;
     transition: opacity 0.5s ease;
 }
 

@@ -13,6 +13,26 @@ let slides = ''
 let numberOfSlides =''
 let slideNumber = 0
 
+const openPopupBtn = document.querySelector('.popup-open-btn')
+const closePopupBtn = document.querySelector('.popup-close-btn')
+const popup = document.getElementById('popup')
+const overlay = document.getElementById('overlay')
+
+openPopupBtn.addEventListener('click', () => {
+  popup.classList.add('active')
+  overlay.classList.add('active')
+})
+
+closePopupBtn.addEventListener('click', () => {
+  popup.classList.remove('active')
+  overlay.classList.remove('active')
+})
+
+overlay.addEventListener('click', () => {
+  popup.classList.remove('active')
+  overlay.classList.remove('active')
+})
+
 const getApiKey =  async () => {
   const response = await fetch('https://id.twitch.tv/oauth2/token?client_id=xa1693c4tecsc6kp8m5hh5yemzube8&client_secret=zilm2kgj0lrbdrye67s74033j175qt&grant_type=client_credentials', {method: 'POST'})
   const data = await response.json()
@@ -43,6 +63,7 @@ const startGame = async () => {
 
 
   mainContainer.innerHTML = `
+    <img class="logo-in-game" src="GameGuesserLogo.png" alt="">
     <div id="game-images-slider">
       <div id="slider-images"></div>
       <div id="image-nav">
