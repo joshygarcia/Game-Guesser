@@ -53,7 +53,7 @@ const options = {
 }
   
 const fetchGame = async () => {
-  const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.igdb.com/v4/games?', options)
+  const response = await fetch('https://api.igdb.com/v4/games?', options)
   const data = await response.json()
 
   return data
