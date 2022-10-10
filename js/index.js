@@ -33,27 +33,16 @@ overlay.addEventListener('click', () => {
   overlay.classList.remove('active')
 })
 
-const getApiKey =  async () => {
-  const response = await fetch('https://id.twitch.tv/oauth2/token?client_id=xa1693c4tecsc6kp8m5hh5yemzube8&client_secret=zilm2kgj0lrbdrye67s74033j175qt&grant_type=client_credentials', {method: 'POST'})
-  const data = await response.json()
-
-  apikey = data.access_token
-  localStorage.setItem('apikey', apikey)
-  return data.access_token
-}
-
 const options = {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('apikey')}`,
-      'Client-ID': 'xa1693c4tecsc6kp8m5hh5yemzube8',
-      'Content-Type': 'application/json'
+      'x-api-key': 'tsPjq6JmoB5sTRDZN8Cdibk9oREX4lk5jR9mHEKj'
     },
     body: 'fields name,cover.image_id,url,similar_games.name,screenshots.image_id; where total_rating_count > 100; limit 500;'
 }
   
 const fetchGame = async () => {
-  const response = await fetch('https://api.igdb.com/v4/games?', options)
+  const response = await fetch('https://7nzuvxklga.execute-api.us-west-2.amazonaws.com/production/v4/games', options)
   const data = await response.json()
 
   return data
@@ -202,5 +191,3 @@ function shuffleArray(array) {
 startBtn.addEventListener('click', () =>{
   startGame()
 })
-
-getApiKey()
