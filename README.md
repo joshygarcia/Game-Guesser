@@ -8,7 +8,6 @@ Welcome to Guess-the-Game, a fun and challenging web-based game where players mu
 2. [Technologies Used](#technologies-used)
 3. [How to Play](#how-to-play)
 4. [APIs](#apis)
-5. [Contributing](#contributing)
 
 ## Features
 
@@ -38,7 +37,3 @@ Welcome to Guess-the-Game, a fun and challenging web-based game where players mu
 ## APIs
 
 This project uses the [IGDB API](https://www.igdb.com/api) to fetch game cover art and associated information.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any bug reports, feature requests, or suggestions.
