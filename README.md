@@ -1,4 +1,4 @@
-# Guess-the-Game
+# Game-Guesser
 
 Welcome to Guess-the-Game, a fun and challenging web-based game where players must correctly guess the name of a video game based on its cover art. This project is hosted and available at [game.joshygarcia.com](http://game.joshygarcia.com).
 
