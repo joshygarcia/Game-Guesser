@@ -9,7 +9,6 @@ Welcome to Guess-the-Game, a fun and challenging web-based game where players mu
 3. [How to Play](#how-to-play)
 4. [APIs](#apis)
 5. [Contributing](#contributing)
-6. [License](#license)
 
 ## Features
 
@@ -43,7 +42,3 @@ This project uses the [IGDB API](https://www.igdb.com/api) to fetch game cover a
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any bug reports, feature requests, or suggestions.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
